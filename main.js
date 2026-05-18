@@ -1,5 +1,20 @@
 const numbersContainer = document.querySelector('.numbers');
 const generateBtn = document.querySelector('#generate');
+const themeToggleBtn = document.querySelector('#toggle-theme');
+
+// Theme Toggle Logic
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    themeToggleBtn.textContent = 'Light Mode';
+}
+
+themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    themeToggleBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+});
 
 const generateNumbers = () => {
     const numbers = new Set();

@@ -1,6 +1,21 @@
 const numbersContainer = document.querySelector('.numbers');
 const generateBtn = document.querySelector('#generate');
 const themeToggleBtn = document.querySelector('#toggle-theme');
+const soundToggleBtn = document.querySelector('#toggle-sound');
+const bgMusic = document.querySelector('#bg-music');
+
+// Sound Toggle Logic
+let isPlaying = false;
+soundToggleBtn.addEventListener('click', () => {
+    if (isPlaying) {
+        bgMusic.pause();
+        soundToggleBtn.textContent = '🔈 Sound On';
+    } else {
+        bgMusic.play().catch(e => console.log("Audio play blocked until interaction"));
+        soundToggleBtn.textContent = '🔊 Sound Off';
+    }
+    isPlaying = !isPlaying;
+});
 
 // Theme Toggle Logic
 const currentTheme = localStorage.getItem('theme');

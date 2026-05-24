@@ -1,50 +1,68 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>인공지능 동물상 테스트</title>
+    <title>Lotto Number Generator</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <div class="container main-container">
-        <header>
-            <h1 class="title">인공지능 동물상 테스트</h1>
-            <p class="subtitle">나는 어떤 동물을 닮았을까? AI가 알려주는 나의 동물상!</p>
-        </header>
-
-        <section class="upload-section">
-            <div id="image-upload-container" class="image-upload-wrap">
-                <input class="file-upload-input" type="file" onchange="readURL(this);" accept="image/*" />
-                <div class="drag-text">
-                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                    <h3>얼굴 사진을 올리거나 눌러서 업로드하세요!</h3>
-                </div>
-            </div>
-            <div class="file-upload-content">
-                <img class="file-upload-image" id="face-image" src="#" alt="your image" />
-                <div id="loading" style="display: none;">
-                    <div class="spinner"></div>
-                    <p>AI가 당신의 관상을 분석중입니다...</p>
-                </div>
-                <p class="result-message"></p>
-                <div id="label-container"></div>
-                <div class="image-title-wrap">
-                    <button type="button" onclick="window.location.reload()" class="remove-image">
-                        다른 사진으로 재시도
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>© 2024 AI Animal Face Test. All Rights Reserved.</p>
-        </footer>
+    <div class="theme-toggle">
+        <a href="animal-test.html" class="nav-link">동물상테스트</a>
+        <button id="toggle-sound">🔈 Sound On</button>
+        <button id="toggle-theme">Dark Mode</button>
+    </div>
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <!-- Alternative royalty-free ambient source if needed -->
+    </audio>
+    <div class="container">
+        <h1>Lotto Number Generator</h1>
+        <div class="numbers"></div>
+        <button id="generate">Generate Numbers</button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <div class="form-container">
+        <h2>제휴 문의</h2>
+        <form action="https://formspree.io/f/xkoevwgg" method="POST">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" required placeholder="성함을 입력해주세요">
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="_replyto" required placeholder="example@email.com">
+            </div>
+            <div class="form-group">
+                <label for="message">문의 내용</label>
+                <textarea id="message" name="message" required placeholder="제휴 관련 문의 내용을 입력해주세요"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">제출하기</button>
+        </form>
+    </div>
+
+    <div id="disqus_thread_container">
+        <div id="disqus_thread"></div>
+    </div>
+    <script>
+        /**
+        *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+        *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+        /*
+        var disqus_config = function () {
+        this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+        this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+        };
+        */
+        (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = 'https://practice-coding.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
     <script src="main.js"></script>
 </body>
 </html>

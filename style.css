@@ -149,6 +149,18 @@ button:not(.submit-btn):hover {
     opacity: 0.8;
 }
 
+#disqus_thread_container {
+    width: 100%;
+    max-width: 440px;
+    margin-top: 40px;
+    padding: 20px;
+    background-color: var(--ball-bg);
+    border: 1px solid var(--ball-border);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+}
+
 .theme-toggle {
     position: absolute;
     top: 20px;

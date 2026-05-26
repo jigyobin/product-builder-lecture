@@ -1,3 +1,19 @@
+// Theme Toggle Logic
+const themeToggleBtn = document.querySelector('#toggle-theme');
+const currentTheme = localStorage.getItem('theme');
+
+if (currentTheme === 'dark') {
+    document.body.classList.add('dark-mode');
+    themeToggleBtn.textContent = 'Light Mode';
+}
+
+themeToggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    themeToggleBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+});
+
 // the link to your model provided by Teachable Machine export panel
 const URL = "https://teachablemachine.withgoogle.com/models/vOFxIhqsg/";
 

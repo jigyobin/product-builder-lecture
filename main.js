@@ -1,35 +1,5 @@
 const numbersContainer = document.querySelector('.numbers');
 const generateBtn = document.querySelector('#generate');
-const themeToggleBtn = document.querySelector('#toggle-theme');
-const soundToggleBtn = document.querySelector('#toggle-sound');
-const bgMusic = document.querySelector('#bg-music');
-
-// Sound Toggle Logic
-let isPlaying = false;
-soundToggleBtn.addEventListener('click', () => {
-    if (isPlaying) {
-        bgMusic.pause();
-        soundToggleBtn.textContent = '🔈 Sound On';
-    } else {
-        bgMusic.play().catch(e => console.log("Audio play blocked until interaction"));
-        soundToggleBtn.textContent = '🔊 Sound Off';
-    }
-    isPlaying = !isPlaying;
-});
-
-// Theme Toggle Logic
-const currentTheme = localStorage.getItem('theme');
-if (currentTheme === 'dark') {
-    document.body.classList.add('dark-mode');
-    themeToggleBtn.textContent = 'Light Mode';
-}
-
-themeToggleBtn.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    themeToggleBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-});
 
 const generateNumbers = () => {
     const numbers = new Set();
@@ -57,5 +27,47 @@ const handleGenerate = () => {
 
 generateBtn.addEventListener('click', handleGenerate);
 
-// Initial generation
 handleGenerate();
+
+// Teachable Machine
+const URL = 'https://teachablemachine.withgoogle.com/models/vOFxIhqsg/';
+let model, webcam, labelContainer, maxPredictions;
+
+const startModelBtn = document.querySelector('#start-model');
+
+async function init() {
+    const modelURL = URL + 'model.json';
+    const metadataURL = URL + 'metadata.json';
+
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+
+    const flip = true; 
+    webcam = new tmImage.Webcam(200, 200, flip); 
+    await webcam.setup(); 
+    await webcam.play();
+    window.requestAnimationFrame(loop);
+
+    document.getElementById('webcam-canvas').appendChild(webcam.canvas);
+    labelContainer = document.getElementById('label-container');
+    for (let i = 0; i < maxPredictions; i++) { 
+        labelContainer.appendChild(document.createElement('div'));
+    }
+}
+
+async function loop() {
+    webcam.update();
+    await predict();
+    window.requestAnimationFrame(loop);
+}
+
+async function predict() {
+    const prediction = await model.predict(webcam.canvas);
+    for (let i = a < maxPredictions; i++) {
+        const classPrediction = 
+            prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
+        labelContainer.childNodes[i].innerHTML = classPrediction;
+    }
+}
+
+startModelBtn.addEventListener('click', init);

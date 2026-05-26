@@ -1,1 +1,53 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Chat Test</title>\n    <!-- Channel.io Plugin -->\n    <script>\n        (function() {\n            var w = window;\n            if (w.ChannelIO) {\n                return (window.console.error || window.console.log || function(){})(\'ChannelIO script included twice.\');\n            }\n            var ch = function() {\n                ch.c(arguments);\n            };\n            ch.q = [];\n            ch.c = function(args) {\n                ch.q.push(args);\n            };\n            w.ChannelIO = ch;\n            function l() {\n                if (w.ChannelIOInitialized) {\n                    return;\n                }\n                w.ChannelIOInitialized = true;\n                var s = document.createElement(\'script\');\n                s.type = \'text/javascript\';\n                s.async = true;\n                s.src = \'https://cdn.channel.io/plugin/ch-plugin-web.js\';\n                s.charset = \'UTF-8\';\n                var x = document.getElementsByTagName(\'script\')[0];\n                x.parentNode.insertBefore(s, x);\n            }\n            if (document.readyState === \'complete\') {\n                l();\n            } else if (window.attachEvent) {\n                window.attachEvent(\'onload\', l);\n            } else {\n                window.addEventListener(\'DOMContentLoaded\', l, false);\n                window.addEventListener(\'load\', l, false);\n            }\n        })();\n        ChannelIO(\'boot\', {\n            "pluginKey": "c421f67e-6569-45b9-8334-36a5368a855a"\n        });\n    <\/script>\n</head>\n<body>\n    <h1>Testing Channel.io...</h1>\n    <p>Please check for the chat widget.</p>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Test</title>
+    <!-- Channel.io Plugin -->
+    <script>
+        (function() {
+            var w = window;
+            if (w.ChannelIO) {
+                return (window.console.error || window.console.log || function(){})('ChannelIO script included twice.');
+            }
+            var ch = function() {
+                ch.c(arguments);
+            };
+            ch.q = [];
+            ch.c = function(args) {
+                ch.q.push(args);
+            };
+            w.ChannelIO = ch;
+            function l() {
+                if (w.ChannelIOInitialized) {
+                    return;
+                }
+                w.ChannelIOInitialized = true;
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = 'https://cdn.channel.io/plugin/ch-plugin-web.js';
+                s.charset = 'UTF-8';
+                var x = document.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+            }
+            if (document.readyState === 'complete') {
+                l();
+            } else if (window.attachEvent) {
+                window.attachEvent('onload', l);
+            } else {
+                window.addEventListener('DOMContentLoaded', l, false);
+                window.addEventListener('load', l, false);
+            }
+        })();
+        ChannelIO('boot', {
+            "pluginKey": "c421f67e-6569-45b9-8334-36a5368a855a"
+        });
+    </script>
+</head>
+<body>
+    <h1>Testing Channel.io...</h1>
+    <p>Please check for the chat widget.</p>
+</body>
+</html>

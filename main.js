@@ -1,3 +1,4 @@
+// Lotto Number Generator
 const numbersContainer = document.querySelector('.numbers');
 const generateBtn = document.querySelector('#generate');
 
@@ -25,49 +26,61 @@ const handleGenerate = () => {
     displayNumbers(newNumbers);
 };
 
-generateBtn.addEventListener('click', handleGenerate);
+if (generateBtn) {
+    generateBtn.addEventListener('click', handleGenerate);
+    // Initial generation
+    handleGenerate();
+}
 
-handleGenerate();
-
-// Teachable Machine
-const URL = 'https://teachablemachine.withgoogle.com/models/vOFxIhqsg/';
-let model, webcam, labelContainer, maxPredictions;
-
+// Teachable Machine Cat & Dog Classifier
 const startModelBtn = document.querySelector('#start-model');
 
-async function init() {
-    const modelURL = URL + 'model.json';
-    const metadataURL = URL + 'metadata.json';
+if (startModelBtn) {
+    const URL = 'https://teachablemachine.withgoogle.com/models/vOFxIhqsg/';
+    let model, webcam, labelContainer, maxPredictions;
 
-    model = await tmImage.load(modelURL, metadataURL);
-    maxPredictions = model.getTotalClasses();
+    async function init() {
+        const modelURL = URL + 'model.json';
+        const metadataURL = URL + 'metadata.json';
 
-    const flip = true; 
-    webcam = new tmImage.Webcam(200, 200, flip); 
-    await webcam.setup(); 
-    await webcam.play();
-    window.requestAnimationFrame(loop);
+        model = await tmImage.load(modelURL, metadataURL);
+        maxPredictions = model.getTotalClasses();
 
-    document.getElementById('webcam-canvas').appendChild(webcam.canvas);
-    labelContainer = document.getElementById('label-container');
-    for (let i = 0; i < maxPredictions; i++) { 
-        labelContainer.appendChild(document.createElement('div'));
+        const flip = true; 
+        webcam = new tmImage.Webcam(200, 200, flip); 
+        await webcam.setup(); 
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        const webcamCanvasContainer = document.getElementById('webcam-canvas');
+        webcamCanvasContainer.innerHTML = ''; // Clear previous canvas
+        webcamCanvasContainer.appendChild(webcam.canvas);
+        labelContainer = document.getElementById('label-container');
+        labelContainer.innerHTML = ''; // Clear previous labels
+        for (let i = 0; i < maxPredictions; i++) { 
+            labelContainer.appendChild(document.createElement('div'));
+        }
+
+        startModelBtn.textContent = "Camera Started";
+        startModelBtn.disabled = true;
     }
-}
 
-async function loop() {
-    webcam.update();
-    await predict();
-    window.requestAnimationFrame(loop);
-}
-
-async function predict() {
-    const prediction = await model.predict(webcam.canvas);
-    for (let i = 0; i < maxPredictions; i++) {
-        const classPrediction = 
-            prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[i].innerHTML = classPrediction;
+    async function loop() {
+        webcam.update();
+        await predict();
+        window.requestAnimationFrame(loop);
     }
-}
 
-startModelBtn.addEventListener('click', init);
+    async function predict() {
+        const prediction = await model.predict(webcam.canvas);
+        for (let i = 0; i < maxPredictions; i++) {
+            const classPrediction = 
+                prediction[i].className + ': ' + prediction[i].probability.toFixed(2);
+            if(labelContainer.childNodes[i]) {
+                labelContainer.childNodes[i].innerHTML = classPrediction;
+            }
+        }
+    }
+
+    startModelBtn.addEventListener('click', init);
+}
